@@ -1,12 +1,12 @@
 rm(list = ls())
 
 ## Include the functions required for data partitioning
-source("")
+source("myfunctions.R")
 
 #######################
 ### Regression Tree ###
 #######################
-autompg <- read.csv("")
+autompg <- read.csv("autompg.csv")
 
 # use partition.2 function from myfunctions.R and create 60:40 partition
 RNGkind (sample.kind = "Rounding") 
