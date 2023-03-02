@@ -42,12 +42,12 @@ plot(nn2, rep="best")
 ## Neural net for classification problem ##
 ###########################################
 
-diabetes <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/diabetes.csv")
+diabetes <- read.csv("diabetes.csv")
 diabetes$Outcome <- as.factor(diabetes$Outcome)
 levels(diabetes$Outcome) <- c("no", "yes")
 
 ## Include the functions required for data partitioning
-source("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/R files/myfunctions.R")
+source("myfunctions.R")
 
 RNGkind (sample.kind = "Rounding") 
 set.seed(0)
