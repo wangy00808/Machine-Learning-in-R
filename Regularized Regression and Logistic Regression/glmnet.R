@@ -15,6 +15,13 @@ training.data <- p2$data.train
 test.data <- p2$data.test
 
 
+
+
+####################################################################################################
+# Using glmnet to perform regularized regression (lasso, ridge and elasticnet)
+####################################################################################################
+
+
 library(glmnet)
 
 # convert data to matrix type
@@ -36,7 +43,7 @@ plot(ridge, xvar = "lambda", main = "Elastic net regression")
 
 
 ####################################################################################################
-# Using caret to perform regularized regression====================================================
+# Using caret to perform regularized regression to find the best turning parameter lambda (k fold cross validation)
 ####################################################################################################
 
 
