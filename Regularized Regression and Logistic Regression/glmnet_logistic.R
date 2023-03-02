@@ -1,9 +1,9 @@
-diabetes <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/diabetes.csv")
+diabetes <- read.csv("diabetes.csv")
 diabetes$Outcome <- as.factor(diabetes$Outcome)
 levels(diabetes$Outcome) <- c("no", "yes")
 
 ## Include the functions required for data partitioning
-source("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/R files/myfunctions.R")
+source("myfunctions.R")
 
 set.seed(0) ## set seed so that you get same partition each time
 p2 <- partition.2(diabetes, 0.7) ## creating 70:30 partition
@@ -11,7 +11,9 @@ training.data <- p2$data.train
 test.data <- p2$data.test
 
 
-
+####################################################################################
+#### perform regularized logistic regression with glmnet ===========================
+####################################################################################
 
 library(glmnet)
 
@@ -20,6 +22,8 @@ trainX <- as.matrix(training.data[, -9])
 testX <- as.matrix(test.data[, -9])
 trainY <- training.data$Outcome
 
+
+
 lasso <- glmnet(x = trainX, y = trainY, alpha = 1, family = "binomial")
 plot(lasso, xvar = "lambda", main = "Lasso regression")
 
@@ -27,7 +31,9 @@ ridge <- glmnet(x = trainX, y = trainY, alpha = 0, family = "binomial")
 plot(ridge, xvar = "lambda", main = "Ridge regression")
 
 
-# Using caret to perform regularized regression
+##################################################################################################################
+# Use caret to perform regularized logistic regression to find the best tuning parameter lambda (cross validation)
+##################################################################################################################
 library(caret)
 set.seed(0)
 train_control <- trainControl(method="cv", number=10)
