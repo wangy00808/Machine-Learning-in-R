@@ -2,10 +2,10 @@
 ## Neural net for regression problem ##
 #######################################
 
-autompg <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/autompg.csv")
+autompg <- read.csv("autompg.csv")
 
 ## Include the functions required for data partitioning
-source("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/R files/myfunctions.R")
+source("myfunctions.R")
 
 RNGkind (sample.kind = "Rounding") 
 set.seed(0)
