@@ -4,7 +4,7 @@ ebay <- read.csv("eBayAuctions2.csv")
 ebay$Competitive = as.factor(ebay$Competitive)
 levels(ebay$Competitive) <- c("no", "yes")
 ## Include the functions required for data partitioning
-source("partitionfunctions.R")
+source("myfunctions.R")
 
 #########################################
 ## Create training and test data ##
