@@ -1,6 +1,6 @@
 rm(list = ls())
 
-diabetes <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/diabetes.csv")
+diabetes <- read.csv("diabetes.csv")
 diabetes$Outcome = as.factor(diabetes$Outcome)
 
 ## Include the functions required for data partitioning
