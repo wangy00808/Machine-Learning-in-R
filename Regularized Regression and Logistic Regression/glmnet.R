@@ -1,12 +1,12 @@
 rm(list = ls())
 
-autompg <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/autompg.csv")
+autompg <- read.csv("autompg.csv")
 Dat <- autompg
 
 ## Include the functions required for data partitioning
-source("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/R files/myfunctions.R")
+source("myfunctions.R")
 
-#Dat <- read.csv("D:/Data mining/datasets/prostrate_cancer.csv")
+
 
 
 set.seed(123) ## set seed so that you get same partition each time
@@ -33,7 +33,13 @@ plot(ridge, xvar = "lambda", main = "Ridge regression")
 elasticnet <- glmnet(x = trainX, y = trainY, alpha = 0.5)
 plot(ridge, xvar = "lambda", main = "Elastic net regression")
 
-# Using caret to perform regularized regression
+
+
+####################################################################################################
+# Using caret to perform regularized regression====================================================
+####################################################################################################
+
+
 library(caret)
 set.seed(0)
 train_control <- trainControl(method="cv", number=10)
@@ -89,7 +95,9 @@ error.test.ridge <- yhat.ridge - test.data$mpg
 rmse.test.ridge <- sqrt(mean(error.test.ridge^2))
 rmse.test.ridge
 
-### elastic net
+#########################
+### elastic net #########
+#########################
 
 glmnet.elasticnet <- train(mpg ~ ., data = training.data, method = "glmnet",
                       trControl = train_control, 
