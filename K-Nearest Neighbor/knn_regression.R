@@ -3,10 +3,10 @@ rm(list = ls())
 ### knn for regression ###
 ##########################
 
-autompg <- read.csv("")
+autompg <- read.csv("autompg.csv")
 
 ## Include the functions required for data partitioning
-source("")
+source("myfunctions.R")
 
 RNGkind (sample.kind = "Rounding") 
 set.seed(0)
@@ -16,7 +16,9 @@ training.data <- p3$data.train
 validation.data <- p3$data.val
 test.data <- p3$data.test
 
-### Rescale the data
+##################################################################
+### Rescale the data for the function knn.reg======================
+##################################################################
 training.scaled <- scale(training.data[,-1], center = TRUE, scale = TRUE)
 training.scaled.wY <- cbind(training.scaled, training.data[,1])
 training.scaled.attr <- attributes(training.scaled)
@@ -28,7 +30,12 @@ test.scaled <- scale(test.data[,-1],
                      scale = training.scaled.attr$`scaled:scale`)
 
 
-### Fit kNN model on validation data with k=5
+
+##################################################################
+### Fit kNN model on validation data with k=5======================
+##################################################################
+
+
 library(FNN)
 Knn <- knn.reg(train = training.scaled, test = val.scaled,
                y = training.data[,1], k = 5)
@@ -39,7 +46,11 @@ error.val.knn <- Knn$pred - validation.data$mpg
 rmse.val.knn <- sqrt(mean(error.val.knn^2))
 rmse.val.knn
 
-## K-fold Cross Validation
+
+##################################################################
+### Use K-fold Cross Validation to tune the parameter K ==========
+##################################################################
+
 # value of K equal to 10 
 set.seed(0)
 train_control <- trainControl(method = "cv", 
@@ -54,7 +65,8 @@ training.data.all <- rbind(training.data, validation.data)
 # print(Knn_kcv)
 
 
-# Specify tuning parameter using tuneGrid
+# Specify tuning parameter using tuneGrid====================
+
 tg <- data.frame(k = seq(1,350,5))
 Knn_kcv <- train(mpg ~ ., data = training.data.all, method = "knn",
                  trControl = train_control, preProcess = c("center","scale"),
@@ -63,7 +75,6 @@ print(Knn_kcv)
 
 plot(Knn_kcv)
 Knn_kcv$finalModel
-#dev.copy2pdf(file = "E:/Data mining/Lecture Notes/plots/knn_reg1.pdf")
 
 
 ### fit k-nn model on test data with k=11
