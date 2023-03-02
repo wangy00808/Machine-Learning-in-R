@@ -4,12 +4,12 @@ rm(list = ls())
 ### knn for classification ###
 ##############################
 
-diabetes <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/diabetes.csv")
+diabetes <- read.csv("diabetes.csv")
 diabetes$Outcome <- as.factor(diabetes$Outcome)
 levels(diabetes$Outcome) <- c("no", "yes")
 
 ## Include the functions required for data partitioning
-source("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/R files/myfunctions.R")
+source("myfunctions.R")
 
 RNGkind (sample.kind = "Rounding") 
 set.seed(0)
@@ -19,7 +19,12 @@ training.data <- p3$data.train
 validation.data <- p3$data.val
 test.data <- p3$data.test
 
-### Rescale the data
+
+##############################################################################################################
+##======== Rescale the data  =================================================================================
+##############################################################################################################
+
+
 training.scaled <- scale(training.data[,-9], center = TRUE, scale = TRUE)
 training.scaled.wY <- cbind(training.scaled, training.data$Outcome)
 training.scaled.attr <- attributes(training.scaled)
@@ -31,7 +36,11 @@ test.scaled <- scale(test.data[,-9],
                     scale = training.scaled.attr$`scaled:scale`)
 
 
-### Fit kNN model on a single new observation with k=5
+
+##############################################################################################################
+##======== Use the package FNN, and Fit kNN model on new observations with k=5 ===============================
+##############################################################################################################
+
 newObs <- data.frame(Pregnancies = 3, Glucose = 120, BloodPressure = 70, 
                      SkinThickness = 20, Insulin = 80, BMI = 30,  
                      DiabetesPedigreeFunction = 0.44, Age = 46)
@@ -56,15 +65,21 @@ cutoff <- 0.3 # if proportion of occurrences of class "yes" > cutoff then predic
 pred <- ifelse((sum(k.labels == "yes")/K) >= cutoff, "yes", "no")
 
 
-### fit k-nn model on validation data with k=5
+### fit k-nn model on validation data with k=5========================================================
+
 library(FNN)
 library(caret)
 Knn <- knn(train = training.scaled, test = val.scaled,
            cl = training.data[,9], k = 5)
 confusionMatrix(as.factor(Knn), as.factor(validation.data[,9]), 
                 positive = "yes")
+                
+                
+##############################################################################################################
+##========fit k-nn model for k = 1, ..., 100 and determine the best K  ========================================
+##############################################################################################################
 
-### fit k-nn model for k = 1, ..., 100
+
 K <- 100
 kappa <- rep(0, K)
 for (kk in 1:K){
@@ -93,8 +108,10 @@ confusionMatrix(as.factor(Knn), as.factor(test.data[,9]),
                 positive = "yes")
 
 
+##############################################################################################################
+##======== K-fold Cross Validation for learning the K ======================================================
+##############################################################################################################
 
-## K-fold Cross Validation
 # value of K equal to 10 
 set.seed(0)
 train_control <- trainControl(method = "cv", 
