@@ -1,9 +1,9 @@
 rm(list = ls())
 
-autompg <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/autompg.csv")
+autompg <- read.csv("autompg.csv")
 
 ## Include the functions required for data partitioning
-source("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/R files/myfunctions.R")
+source("myfunctions.R")
 RNGkind (sample.kind = "Rounding") 
 set.seed(0)
 p2 <- partition.2(autompg, 0.6)
