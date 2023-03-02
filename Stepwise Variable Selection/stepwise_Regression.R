@@ -1,10 +1,10 @@
 rm(list = ls())
 
-autompg <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/autompg.csv")
+autompg <- read.csv("autompg.csv")
 Dat <- autompg
 
 ## Include the functions required for data partitioning
-source("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/R files/myfunctions.R")
+source("myfunctions.R")
 
 set.seed(123) ## set seed so that you get same partition each time
 p2 <- partition.2(Dat, 0.7) ## creating 70:30 partition
