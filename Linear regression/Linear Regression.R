@@ -1,4 +1,4 @@
-autompg <- read.csv("~/Downloads/autompg.csv")
+autompg <- read.csv("autompg.csv")
 Dat <- autompg
 
 ## Scatter plot ##
@@ -15,7 +15,7 @@ plot(Dat$year, Dat$mpg)
 #########################################
 
 ## Include the functions required for data partitioning
-source("F:/Data mining/Lecture Notes/myfunctions.R")
+source("myfunctions.R")
 
 
 RNGkind (sample.kind = "Rounding") 
@@ -99,7 +99,7 @@ predict(mlr5, x0)
 ## Multiple linear regression model with categorical regressors ##
 ##################################################################
 
-house <- read.csv("~/Desktop/teaching 2022 fall/Math 540&440 statistical learning/yang/datasets/houseprice.csv")
+house <- read.csv("houseprice.csv")
 table(house$view)
 
 mlr <- lm(price ~ sqft + factor(view) , data=house)
